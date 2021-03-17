@@ -1,16 +1,20 @@
-def chunk(list):
-    new_list = []
-    for i in range(0, len(list), 2):
-        new_list.append([list[i], list[i+1]])
-    return new_list
+from flask import Flask, request, jsonify
 
 
 def appearance(intervals):
     lesson_start = intervals['lesson'][0]
     lesson_end = intervals['lesson'][1]
 
+
+    def chunk(list):
+        new_list = []
+        for i in range(0, len(list), 2):
+            new_list.append([list[i], list[i+1]])
+        return new_list
+
     chunked_pupil = chunk(intervals['pupil'])
     chunked_tutor = chunk(intervals['tutor'])
+
 
     def intersection(pupil, tutor):
         intersection = []
@@ -32,8 +36,9 @@ def appearance(intervals):
     return overall_time
 
 
-print(appearance({
-  'lesson': [1594663200, 1594666800],
-  'pupil': [1594663340, 1594663389, 1594663390, 1594663395, 1594663396, 1594666472],
-  'tutor': [1594663290, 1594663430, 1594663443, 1594666473]
-}))
+app = Flask(__name__)
+
+@app.route('/', methods=['POST'])
+def json_intervals():
+    result = appearance(request.json)
+    return jsonify(result)
