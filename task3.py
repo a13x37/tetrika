@@ -5,7 +5,6 @@ def appearance(intervals):
     lesson_start = intervals['lesson'][0]
     lesson_end = intervals['lesson'][1]
 
-
     def chunk(list):
         new_list = []
         for i in range(0, len(list), 2):
@@ -14,7 +13,6 @@ def appearance(intervals):
 
     chunked_pupil = chunk(intervals['pupil'])
     chunked_tutor = chunk(intervals['tutor'])
-
 
     def intersection(pupil, tutor):
         intersection = []
@@ -37,6 +35,7 @@ def appearance(intervals):
 
 
 app = Flask(__name__)
+
 
 @app.route('/', methods=['POST'])
 def json_intervals():

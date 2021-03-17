@@ -30,4 +30,5 @@ def output():
         output += "{}: {}\n".format(key, data[key])
     return output
 
+
 print(output())
